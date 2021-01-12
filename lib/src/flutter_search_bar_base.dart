@@ -130,11 +130,13 @@ class SearchBar {
   /// backgroundColor is determined by the value of inBar
   /// title is always a [TextField] with the key 'SearchBarTextField', and various text stylings based on [inBar]. This is also where [onSubmitted] has its listener registered.
   ///
-  AppBar buildSearchBar(BuildContext context) {
+  AppBar buildSearchBar(BuildContext context, {Brightness brightness}) {
     ThemeData theme = Theme.of(context);
     Color buttonColor = inBar ? null : theme.iconTheme.color;
+    Brightness _brightness = brightness ?? theme.appBarTheme.brightness;
 
     return AppBar(
+      brightness: _brightness,
       leading: IconButton(
           icon: const BackButtonIcon(),
           color: buttonColor,
@@ -205,7 +207,9 @@ class SearchBar {
   }
 
   /// Returns an AppBar based on the value of [isSearching]
-  AppBar build(BuildContext context) {
-    return isSearching.value ? buildSearchBar(context) : buildAppBar(context);
+  AppBar build(BuildContext context, {Brightness brightness}) {
+    return isSearching.value
+        ? buildSearchBar(context, brightness: brightness)
+        : buildAppBar(context);
   }
 }
